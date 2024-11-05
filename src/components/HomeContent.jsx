@@ -1,5 +1,5 @@
 "use client";
-//import { useState, useRef } from "react";
+import { useState, useRef } from "react";
 export default function HomeContent() {
   //const fileInput = useRef(null);
   const [prompt, setprompt] = useState("");
