@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState } from "react";
 export default function HomeContent() {
   //const fileInput = useRef(null);
   const [prompt, setprompt] = useState("");
@@ -46,7 +46,12 @@ export default function HomeContent() {
   };
 
   return (
-    <div className="p-6">
+    <div className="px-6 gap-2">
+      <div className="flex flex-col items-center py-3">
+        <video width="640" height="360" controls autoPlay>
+          <source src="\images\Henna\wedding.mp4" type="video/mp4" />
+        </video>
+      </div>
       <div className="flex flex-col items-center">
         <textarea
           rows="3"
