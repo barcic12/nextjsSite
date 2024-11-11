@@ -20,8 +20,13 @@ export default function Header() {
           //onClick={run}
         />
         <MenuItem title="remove" address="/removeUser" Icon={MdRemoveCircle} />
-        <MenuItem title="items" address="/items" Icon={FaListUl} />
-        <MenuItem title="cart" address="/cart" Icon={BsCart4} />
+        <MenuItem title="products" address="/products" Icon={FaListUl} />
+        <MenuItem
+          title="create products"
+          address="/products/create"
+          Icon={FaListUl}
+        />
+        <MenuItem title="cart" address="/cart" />
         <MenuItem
           title="whatsApp"
           address="https://wa.me/972509090004"

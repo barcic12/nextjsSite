@@ -9,7 +9,7 @@ export default function MenuItem({ title, address, Icon, onClick, target }) {
         onClick={onClick || undefined}
         target={target || undefined}
       >
-        <Icon className="text-2xl sm:hidden" />
+        {Icon && <Icon className="text-2xl sm:hidden" />}
         <p className="hidden sm:inline text-sm">{title}</p>
       </Link>
     </div>

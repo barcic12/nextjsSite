@@ -1,7 +1,7 @@
 // src/services/userServices.js
 
-import dbConnect from "../db/conncet"; // Database connection utility
-import User from "../models/User"; // User model for MongoDB
+import dbConnect from "@/db/conncet"; // Database connection utility
+import User from "@/models/User"; // User model for MongoDB
 import bcrypt from "bcryptjs"; // Library for hashing passwords
 import { NextResponse } from "next/server"; // Next.js response handling
 
@@ -16,7 +16,7 @@ import { NextResponse } from "next/server"; // Next.js response handling
 export async function createUser(name, password) {
   if (!name || !password) {
     return NextResponse.json(
-      { message: "All fields are required" },
+      { success: false, message: "All fields are required" },
       { status: 400 }
     );
   }
@@ -39,13 +39,16 @@ export async function createUser(name, password) {
       password: hashedPassword,
     });
 
-    await user.save(); // Save the new user to the database
+    await user.save();
     return NextResponse.json(
-      { message: "User created successfully" },
+      { success: true, message: "User created successfully" },
       { status: 201 }
     );
   } catch (error) {
-    return NextResponse.json({ message: error.message }, { status: 500 });
+    return NextResponse.json(
+      { success: false, message: error.message },
+      { status: 500 }
+    );
   }
 }
 
@@ -60,7 +63,7 @@ export async function createUser(name, password) {
 export async function deleteUser(name, password) {
   if (!name || !password) {
     return NextResponse.json(
-      { message: "All fields are required" },
+      { success: false, message: "All fields are required" },
       { status: 400 }
     );
   }
@@ -80,7 +83,7 @@ export async function deleteUser(name, password) {
 
     await User.deleteOne({ _id: user._id });
     return NextResponse.json(
-      { message: "User removed successfully" },
+      { success: true, message: "User removed successfully" },
       { status: 410 }
     );
   } catch (error) {
@@ -98,7 +101,7 @@ export async function deleteUser(name, password) {
  */
 export async function findUser(username, password) {
   try {
-    await dbConnect(); // Connect to the database
+    await dbConnect();
 
     const user = await User.findOne({ name: username });
     if (!user) {

@@ -10,7 +10,7 @@ export const POST = async (request) => {
         { status: 400 }
       );
     }
-    const ret = await removeFile(filename);
+    const ret = await removeFile(filename, "src\\photos\\");
     return ret;
   } catch (error) {
     return NextResponse.json({
