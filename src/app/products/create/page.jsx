@@ -26,6 +26,11 @@ export default function CreatePage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     let res = await upload(e);
+    setProductName("");
+    setSelectedFolder("");
+    setFile(null);
+    setCount(0);
+    alert("Created successfully");
   };
   const upload = async (e) => {
     const formData = new FormData();
