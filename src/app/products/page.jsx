@@ -1,42 +1,10 @@
 // src/app/items/page.jsx
-"use client";
-import Item from "@/components/Item";
-import { useState, useEffect } from "react";
+
+import ProductsList from "@/components/ProductsList";
 export default function ItemsPage() {
-  const [products, setProducts] = useState([]);
-  useEffect(() => {
-    const fetchDetails = async () => {
-      try {
-        const response = await fetch("/api/product/getDetails", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({}),
-        });
-        const data = await response.json(); // Parse the JSON response
-        setProducts(data.data);
-      } catch (error) {
-        console.log(error.message);
-      }
-    };
-    fetchDetails();
-  }, []);
   return (
-    <div className="flex flex-wrap items-center justify-center min-h-screen bg-[#cffafe] gap-3 py-6">
-      {products.length > 0 &&
-        products.map(
-          (product, index) =>
-            product.quantityInStock > 0 && (
-              <Item
-                key={index}
-                imagePath={product.imagePath}
-                title={product.name}
-                maxAmount={product.quantityInStock}
-                price={product.price}
-              />
-            )
-        )}
+    <div>
+      <ProductsList></ProductsList>
     </div>
   );
 }

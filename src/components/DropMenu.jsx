@@ -1,23 +1,11 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { FaListUl } from "react-icons/fa";
+import { IoMdCheckboxOutline } from "react-icons/io";
 import MenuItem from "./MenuItem";
 import Link from "next/link";
-export default function DropMenu({ title, initAddress }) {
-  const [routes, setRoutes] = useState([]);
+export default function DropMenu({ title, initAddress, routes }) {
   const [showDropdown, setShowDropdown] = useState(false);
-  useEffect(() => {
-    const fetchRoutes = async () => {
-      try {
-        const response = await fetch("/api/product/create");
-        const data = await response.json(); // Parse the JSON response
-        setRoutes(data.data);
-      } catch (error) {
-        console.log(error.message);
-      }
-    };
-    fetchRoutes();
-  }, []);
   return (
     <div
       className="relative bg-green-100 rounded-full"
@@ -32,7 +20,7 @@ export default function DropMenu({ title, initAddress }) {
         ></MenuItem>
       </div>
       <div
-        className={`absolute left-0 w-64 p-4 bg-white rounded-lg shadow-lg z-10 transition-all duration-300 ${
+        className={`absolute left-0 w-64 p-4 text-blue-600 bg-red-300 rounded-lg shadow-lg z-10 transition-all duration-300 ${
           showDropdown ? "max-h-96 opacity-100 mt-2" : "max-h-0 opacity-0 mt-0"
         }`}
       >
@@ -43,7 +31,10 @@ export default function DropMenu({ title, initAddress }) {
               href={initAddress ? `${initAddress}/${route}` : undefined}
               className="hover:text-amber-300"
             >
-              <p className="">{route}</p>
+              <div className="flex items-center">
+                <IoMdCheckboxOutline />
+                <p className="px-2">{route}</p>
+              </div>
             </Link>
           ))}
       </div>

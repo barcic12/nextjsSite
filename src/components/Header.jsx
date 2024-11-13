@@ -1,34 +1,48 @@
+"use client";
 import MenuItem from "./MenuItem";
-import { IoLogoWhatsapp } from "react-icons/io";
-import {
-  FaInstagramSquare,
-  FaFacebook,
-  FaHome,
-  FaListUl,
-} from "react-icons/fa";
-import { MdRemoveCircle } from "react-icons/md";
+import { useState, useEffect } from "react";
+import { IoLogoWhatsapp, IoMdCart } from "react-icons/io";
+import { FaInstagramSquare, FaFacebook, FaHome } from "react-icons/fa";
+import { MdRemoveCircle, MdOutlineCreateNewFolder } from "react-icons/md";
 import { CiLogin } from "react-icons/ci";
 import DropMenu from "./DropMenu";
 export default function Header() {
+  const [routes, setRoutes] = useState([]);
+  useEffect(() => {
+    const fetchProductsRoutes = async () => {
+      try {
+        const response = await fetch("/api/product/create");
+        const data = await response.json(); // Parse the JSON response
+        setRoutes(data.data);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    fetchProductsRoutes();
+  }, []);
   return (
     <div className="flex justify-between bg-lime-200 p-2">
       <div className="flex gap-4">
         <MenuItem
-          title="Sign Up"
-          address="/signup"
+          title="Log In"
+          address="/login"
           Icon={CiLogin}
           //onClick={run}
         />
         <MenuItem title="remove" address="/removeUser" Icon={MdRemoveCircle} />
 
-        <DropMenu title="products" initAddress="/products"></DropMenu>
+        <DropMenu
+          title="products"
+          initAddress="/products"
+          routes={routes}
+        ></DropMenu>
 
         <MenuItem
           title="create products"
           address="/products/create"
-          Icon={FaListUl}
+          Icon={MdOutlineCreateNewFolder}
         />
-        <MenuItem title="cart" address="/cart" />
+        <MenuItem title="cart" address="/cart" Icon={IoMdCart} />
         <MenuItem
           title="whatsApp"
           address="https://wa.me/972509090004"

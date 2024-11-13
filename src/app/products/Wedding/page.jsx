@@ -1,8 +1,8 @@
 import ProductsList from "@/components/ProductsList";
-export default function hennaPage() {
+export default function WeddingPage() {
   return (
     <div>
-      <ProductsList type="Henna"></ProductsList>
+      <ProductsList type="Wedding"></ProductsList>
     </div>
   );
 }
