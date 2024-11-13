@@ -4,6 +4,7 @@ import FillingForm from "@/components/FillingForm";
 export default function LogInPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
   const handleSubmit = async (e) => {
     try {
       const response = await fetch("/api/db/signup", {

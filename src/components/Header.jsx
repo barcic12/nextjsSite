@@ -2,11 +2,17 @@
 import MenuItem from "./MenuItem";
 import { useState, useEffect } from "react";
 import { IoLogoWhatsapp, IoMdCart } from "react-icons/io";
+import { IoHome } from "react-icons/io5";
 import { FaInstagramSquare, FaFacebook, FaHome } from "react-icons/fa";
 import { MdRemoveCircle, MdOutlineCreateNewFolder } from "react-icons/md";
-import { CiLogin } from "react-icons/ci";
+import { CiLogin, CiHome } from "react-icons/ci";
 import DropMenu from "./DropMenu";
 export default function Header() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Initially, user is not logged in
+
+  const toggleLogin = () => {
+    setIsLoggedIn(!isLoggedIn);
+  };
   const [routes, setRoutes] = useState([]);
   useEffect(() => {
     const fetchProductsRoutes = async () => {
@@ -23,11 +29,12 @@ export default function Header() {
   return (
     <div className="flex justify-between bg-lime-200 p-2">
       <div className="flex gap-4">
+        <MenuItem title="home" address="/" Icon={CiHome} />
         <MenuItem
-          title="Log In"
-          address="/login"
+          title={isLoggedIn ? "Log Out" : "Log In"}
+          address={isLoggedIn ? "/" : "/login"}
           Icon={CiLogin}
-          //onClick={run}
+          onClick={isLoggedIn ? toggleLogin : undefined}
         />
         <MenuItem title="remove" address="/removeUser" Icon={MdRemoveCircle} />
 
@@ -63,7 +70,11 @@ export default function Header() {
         />
       </div>
       <div className="">
-        <MenuItem title="home" address="/" Icon={FaHome} />
+        <MenuItem
+          title={<IoHome className="text-xl" />}
+          address="/"
+          Icon={FaHome}
+        />
       </div>
     </div>
   );
