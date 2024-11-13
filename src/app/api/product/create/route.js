@@ -26,8 +26,10 @@ export const POST = async (request) => {
     const formData = await request.formData();
     const file = formData.get("file");
     const folder = formData.get("folder");
+    const type = formData.get("folder");
     const productName = formData.get("productName");
     const count = formData.get("count");
+    const price = formData.get("price");
     if (!file) {
       return NextResponse.json(
         { success: false, message: "No files received." },
@@ -39,7 +41,14 @@ export const POST = async (request) => {
       file.name,
       "public/images/" + folder + "/"
     );
-    ret = await createProduct(productName, file.name, folder, count);
+    ret = await createProduct(
+      productName,
+      file.name,
+      folder,
+      count,
+      type,
+      price
+    );
     return NextResponse.json(
       { success: true, message: "No files received.", data: ret },
       { status: 200 }

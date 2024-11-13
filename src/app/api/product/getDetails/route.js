@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
-import { getAllProductDetails } from "@/services/productServices";
-export const GET = async (request) => {
+import { getProductDetails } from "@/services/productServices";
+export const POST = async (request) => {
   try {
-    const productDetails = await getAllProductDetails();
+    const { type } = await request.json();
+    const productDetails = await getProductDetails(type);
     return NextResponse.json(
       {
         success: true,

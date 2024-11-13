@@ -8,6 +8,7 @@ import {
 } from "react-icons/fa";
 import { MdRemoveCircle } from "react-icons/md";
 import { CiLogin } from "react-icons/ci";
+import DropMenu from "./DropMenu";
 export default function Header() {
   return (
     <div className="flex justify-between bg-lime-200 p-2">
@@ -19,11 +20,9 @@ export default function Header() {
           //onClick={run}
         />
         <MenuItem title="remove" address="/removeUser" Icon={MdRemoveCircle} />
-        <MenuItem
-          title="products"
-          address="/products"
-          Icon={FaListUl}
-        ></MenuItem>
+
+        <DropMenu title="products" initAddress="/products"></DropMenu>
+
         <MenuItem
           title="create products"
           address="/products/create"

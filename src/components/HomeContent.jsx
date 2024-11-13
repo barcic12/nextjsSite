@@ -49,7 +49,7 @@ export default function HomeContent() {
     <div className="px-6 gap-2">
       <div className="flex flex-col items-center py-3">
         <video width="640" height="360" controls autoPlay>
-          <source src="\wedding.mp4" type="video/mp4" />
+          <source src="\images\Henna\wedding.mp4" type="video/mp4" />
         </video>
       </div>
       <div className="flex flex-col items-center">

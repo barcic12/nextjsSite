@@ -7,7 +7,13 @@ export default function ItemsPage() {
   useEffect(() => {
     const fetchDetails = async () => {
       try {
-        const response = await fetch("/api/product/getDetails");
+        const response = await fetch("/api/product/getDetails", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({}),
+        });
         const data = await response.json(); // Parse the JSON response
         setProducts(data.data);
       } catch (error) {
@@ -20,12 +26,14 @@ export default function ItemsPage() {
     <div className="flex flex-wrap items-center justify-center min-h-screen bg-[#cffafe] gap-3 py-6">
       {products.length > 0 &&
         products.map(
-          (product) =>
+          (product, index) =>
             product.quantityInStock > 0 && (
               <Item
+                key={index}
                 imagePath={product.imagePath}
                 title={product.name}
                 maxAmount={product.quantityInStock}
+                price={product.price}
               />
             )
         )}

@@ -23,7 +23,7 @@ export async function getResponse(filePath, prompt) {
         { status: 200 }
       );
     case 2: //Text With Photo
-      const fullFilePath = "src/photos/".concat(filePath);
+      const fullFilePath = "./public/geminiPhotos/".concat(filePath);
       const photoMessage = await getResponseWithPhoto(prompt, fullFilePath);
       return NextResponse.json(
         { success: true, message: photoMessage },

@@ -12,7 +12,7 @@ export const POST = async (request) => {
       );
     }
     const filename = await formData.get("fileName");
-    const ret = await uploadFile(file, filename, "src/photos/");
+    const ret = await uploadFile(file, filename, "public/geminiPhotos/");
     return ret;
   } catch (error) {
     return NextResponse.json({ Message: error.message, status: 500 });

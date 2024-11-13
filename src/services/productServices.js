@@ -8,7 +8,9 @@ export async function createProduct(
   productName,
   fileName,
   folderName,
-  quantityInStock
+  quantityInStock,
+  type,
+  price
 ) {
   if (!productName || !quantityInStock) {
     return NextResponse.json(
@@ -29,6 +31,8 @@ export async function createProduct(
     }
     const product = new Product({
       name: productName,
+      type: type,
+      price: price,
       file_name: fileName,
       image_path: await getImagePath(fileName, folderName),
       quantity_in_stock: quantityInStock,
@@ -82,23 +86,24 @@ export async function getFoldersPath() {
     );
   }
 }
-async function getAllProducts() {
+async function getAllProducts(type) {
   await dbConnect();
   try {
-    const products = await Product.find();
+    const products = type ? await Product.find({ type }) : await Product.find();
     return products;
   } catch (error) {
     throw new Error(error.message);
   }
 }
-export async function getAllProductDetails() {
+export async function getProductDetails(type) {
   try {
     const productDetails = [];
-    const products = await getAllProducts();
+    const products = await getAllProducts(type);
     products.forEach((product) => {
       if (product.quantity_in_stock !== 0) {
         productDetails.push({
           name: product.name,
+          price: product.price,
           imagePath: product.image_path,
           quantityInStock: product.quantity_in_stock,
         });

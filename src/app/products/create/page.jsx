@@ -8,6 +8,7 @@ export default function CreatePage() {
   const [routes, setRoutes] = useState([]);
   const [file, setFile] = useState(null);
   const [count, setCount] = useState(0);
+  const [price, setPrice] = useState(0);
 
   // Fetch routes when the component mounts
   useEffect(() => {
@@ -30,6 +31,7 @@ export default function CreatePage() {
     setSelectedFolder("");
     setFile(null);
     setCount(0);
+    setPrice(0);
     alert("Created successfully");
   };
   const upload = async (e) => {
@@ -38,6 +40,7 @@ export default function CreatePage() {
     formData.append("folder", selectedFolder);
     formData.append("productName", productName);
     formData.append("count", count);
+    formData.append("price", price);
     let res = await fetch("/api/product/create", {
       method: "POST",
       body: formData,
@@ -88,11 +91,37 @@ export default function CreatePage() {
             )}
           </select>
         </div>
-        <div>
-          <label className="block text-gray-700 py-2" htmlFor="routeSelect">
+        <div className="mb-4">
+          <label className="block text-gray-700 py-2" htmlFor="priceInput">
             Choose count
           </label>
-          <Counter count={count} setCount={setCount} />
+          <input
+            type="number"
+            id="countInput"
+            name="count"
+            className="border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter count"
+            min="0"
+            step="1"
+            value={count}
+            onChange={(e) => setCount(e.target.value)}
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 py-2" htmlFor="priceInput">
+            Choose price
+          </label>
+          <input
+            type="number"
+            id="priceInput"
+            name="price"
+            className="border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter price"
+            min="0"
+            step="1"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+          />
         </div>
         <div className="py-5 inline-block">
           <label className="p-2 bg-blue-500 text-white rounded hover:bg-blue-600 px-3 py-1 cursor-pointer">

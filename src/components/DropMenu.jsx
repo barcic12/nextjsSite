@@ -1,34 +1,52 @@
 "use client";
-import { useState } from "react";
-import { FaQuestionCircle } from "react-icons/fa";
-export default function DropMenu({ title }) {
+import { useState, useEffect } from "react";
+import { FaListUl } from "react-icons/fa";
+import MenuItem from "./MenuItem";
+import Link from "next/link";
+export default function DropMenu({ title, initAddress }) {
+  const [routes, setRoutes] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [textValue, setTextValue] = useState("");
+  useEffect(() => {
+    const fetchRoutes = async () => {
+      try {
+        const response = await fetch("/api/product/create");
+        const data = await response.json(); // Parse the JSON response
+        setRoutes(data.data);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    fetchRoutes();
+  }, []);
   return (
-    <div className="relative bg-green-100 rounded-full">
-      <div
-        onClick={() => setShowDropdown(!showDropdown)}
-        className="hover:text-amber-300"
-      >
-        <FaQuestionCircle className="text-2xl sm:hidden" />
-        <p className="hidden sm:inline text-sm">{title}</p>
+    <div
+      className="relative bg-green-100 rounded-full"
+      onMouseEnter={() => setShowDropdown(true)}
+      onMouseLeave={() => setShowDropdown(false)}
+    >
+      <div className="hover:text-amber-300 cursor-pointer">
+        <MenuItem
+          title={title}
+          address={initAddress}
+          Icon={FaListUl}
+        ></MenuItem>
       </div>
-      {showDropdown && (
-        <div className="absolute left-0 mt-2 w-64 p-4 bg-white rounded-lg shadow-lg z-10">
-          <textarea
-            rows="3"
-            onChange={(e) => setTextValue(e.target.value)}
-            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Write your question here..."
-          ></textarea>
-          <button
-            onClick={() => alert("Question submitted")}
-            className="w-full mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-          >
-            Submit
-          </button>
-        </div>
-      )}
+      <div
+        className={`absolute left-0 w-64 p-4 bg-white rounded-lg shadow-lg z-10 transition-all duration-300 ${
+          showDropdown ? "max-h-96 opacity-100 mt-2" : "max-h-0 opacity-0 mt-0"
+        }`}
+      >
+        {routes.length > 0 &&
+          routes.map((route, index) => (
+            <Link
+              key={index}
+              href={initAddress ? `${initAddress}/${route}` : undefined}
+              className="hover:text-amber-300"
+            >
+              <p className="">{route}</p>
+            </Link>
+          ))}
+      </div>
     </div>
   );
 }
